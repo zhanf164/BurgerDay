@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request
 
-@route("/")
-@route("/Home")
+app = Flask(__name__)
+
+@app.route("/")
+@app.route("/Home")
 def Home():
     return render_template("HomePage.html")
 
 
-@route("/Login", methods = ["GET", "POST"])
+@app.route("/Login", methods = ["GET", "POST"])
 def Login():
     if request.method == "POST":
         print("request was made")
@@ -15,4 +17,4 @@ def Login():
 
 
 if __name__ == "__main__":
-    app = Flask(__name__)
+    app.run()
