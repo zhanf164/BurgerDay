@@ -1,16 +1,25 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
+import secrets
+
+from .lib.Forms import SignUpForm, LoginForm, DateForm
 
 app = Flask(__name__)
+secret = secrets.token_urlsafe(32)
+app.secret_key = secret
 
-@app.route("/")
-@app.route("/Home")
+@app.route("/", methods = ["GET", "POST"])
+@app.route("/Home", methods=["GET", "POST"])
 def Home():
-    return render_template("HomePage.html")
+    form = DateForm()
+    return render_template("HomePage.html", form=form)
 
 
-@app.route("/SignUp")
+@app.route("/SignUp", methods=["GET", "POST"])
 def SignUp():
-    return render_tempate("SignUp.html")
+    form = SignUpForm()
+    if request.method == "POST":
+        pass
+    return render_template("SignUp.html", form=form)
 
 @app.route("/Login", methods = ["GET", "POST"])
 def Login():
