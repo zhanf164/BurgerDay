@@ -17,7 +17,7 @@ def Home(user=None):
     #fetch current preferences from database if logged in so we can display them if they exist
     if user != None:
         #fetch preferences here
-        pass
+        preferences = "These Dates"
     else:
         preferences=None
     

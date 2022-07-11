@@ -198,6 +198,13 @@
                 <p>Everyone knows it's difficult to slam three heavy, juicy burgers when it's hot outside. Therefore, the current proposed Burger Day is set for sometime in October. Please indicate below your availability for weekends in October. Make sure that you are signed in so that your preferences are saved. If you have not yet signed up, you can do so <a href="{{url_for('SignUp')}}">here</a>. If at any time your preferences change, just return and re-submit your choices.</p>
                 
                 <div class="container">
+                    {%if preferences != None%}
+
+                        <div class="container">
+                            <h3>Current Preferences Are: {{preferences}}</h3>
+                        </div>
+
+                    {%endif%}
                     <form method="POST" action="{{url_for('Home', user=user)}}">
                         {{form.csrf_token}}
                         <table class="table table-bordered">
