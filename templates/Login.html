@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  {%block head%}
+  <meta charset="utf-8">
+
+  <title>New York Burger Day</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  
+{%endblock%}
+</head>
+
+<body>
+
+    {%block Jumbotron%}
+    <div class="navbar navbar-fixed-top navbar-light" style="background-color: #FDFD97; position:fixed; width:100%; z-index:100;">
+        <a href="{{url_for("SignUp")}}"  style="color: #572D15">Sign Up Here</a>
+    </div>
+    
+    <div class="jumbotron" style="background-color: #D2FDBB;width:100vw">
+        
+        <div class="container" style="text-align: center;">
+            <h1 style="color:#572D15">New York Burger Day</h1>
+        </div>
+    </div>
+
+    <div class="burgers">
+        <div class="images" style="display: flex; justify-content: space-between; height: 50px; width: 100vw;">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px;">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+            <img src="{{url_for('static', filename='burger.webp')}}" style="height: 50px">
+           
+            
+            
+
+        </div>
+    </div>
+
+    {%endblock%}
+
+    <div class="container" style="border-bottom: 1px solid grey;">
+        <h1>Login Below</h1>
+    </div>
+
+    <div class="container" style="display: flex;flex-direction:column;justify-content: space-between;">
+        <form method="POST" action="{{url_for('Login')}}">
+            {{form.csrf_token}}
+            <div class="container" style="display: flex;flex-direction:column;justify-content: space-between;align-items: center;margin-top: 70px;">
+                <h4>Username : {{form.userName}}</h4>
+                <h4>Password  : {{form.password}}</h4>
+                <h4>{{form.submit}}</h4>
+            </div>
+        </form>
+    </div>
+    
+    <div class="container">
+        <h3>If you do not have an account: <a href="{{url_for("SignUp")}}">Sign up Here</a></h3>        
+    </div>
+
+
+</body>

@@ -21,8 +21,13 @@
 <body>
     
     {%block Jumbotron%}
-        <div class="navbar navbar-fixed-top navbar-light" style="background-color: #FDFD97; position:fixed; width:100%; z-index:100;">
-            <a href="{{url_for("SignUp")}}"  style="color: #572D15">Sign Up Here</a>
+        <div class="navbar navbar-fixed-top navbar-light" style="background-color: #FDFD97; position:fixed; width:100%; z-index:2;">
+            <a href="{{url_for("Login")}}"  style="color: #572D15">Login/Sign Up Here</a>
+            <div style="display: flex;flex-direction: row;justify-content: flex-end;">
+                {% if user != None%}
+                    <h4>Current User: {{user}}</h4>
+                {%endif%}
+            </div>
         </div>
         
         <div class="jumbotron" style="background-color: #D2FDBB;width:100vw">
@@ -178,7 +183,7 @@
             
             <div class="container" style="margin-bottom: 100px;margin-top: 20px;">
                 <p>New York Burger Day features three of the premiere burgers in New York. The route can be completed in any order, but must include the following restaurants: Emily (either location), Peter Lugers, and P.J Clark's.</p>
-                <div id="map" style="height:600px"></div>
+                <div id="map" style="height:600px;z-index:1"></div>
 
             </div>
         </div>
@@ -193,16 +198,63 @@
                 <p>Everyone knows it's difficult to slam three heavy, juicy burgers when it's hot outside. Therefore, the current proposed Burger Day is set for sometime in October. Please indicate below your availability for weekends in October. Make sure that you are signed in so that your preferences are saved. If you have not yet signed up, you can do so <a href="{{url_for('SignUp')}}">here</a>. If at any time your preferences change, just return and re-submit your choices.</p>
                 
                 <div class="container">
-                    <form method="POST" action="{{url_for('SignUp')}}">
+                    <form method="POST" action="{{url_for('Home', user=user)}}">
                         {{form.csrf_token}}
-                            <ul>
-                                {%for i in form.choices%}
-                                <li>
-                                    {{i}} 
-                                </li>
-                                {%endfor%}
-                            </ul>
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>
+                                    Available?
+                                </th>
+                                <th>
+                                    Weekend Date
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{form.first}}
+                                    </td>
+                                    <td>
+                                        {{form.first.label}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{form.second}}
+                                    </td>
+                                    <td>
+                                        {{form.second.label}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{form.third}}
+                                    </td>
+                                    <td>
+                                        {{form.third.label}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{form.fourth}}
+                                    </td>
+                                    <td>
+                                        {{form.fourth.label}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{form.fifth}}
+                                    </td>
+                                    <td>
+                                        {{form.fifth.label}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {{form.submit}}
                     </form>
+                   
                 </div>
             </div>
         </div>

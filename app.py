@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 import secrets
+from sqlalchemy import create_engine, MetaData, select
+from sqlalchemy.orm import Session
 
 from .lib.Forms import SignUpForm, LoginForm, DateForm
 
@@ -9,9 +11,27 @@ app.secret_key = secret
 
 @app.route("/", methods = ["GET", "POST"])
 @app.route("/Home", methods=["GET", "POST"])
-def Home():
+@app.route("/Home/<user>", methods=["GET", "POST"])
+def Home(user=None):
     form = DateForm()
-    return render_template("HomePage.html", form=form)
+    #fetch current preferences from database if logged in so we can display them if they exist
+    if user != None:
+        #fetch preferences here
+        pass
+    else:
+        preferences=None
+    
+    if request.method == "POST":
+        if user == None:
+            return redirect(url_for("Login"))
+        else:
+            choice1 = form.first.data
+            choice2 = form.second.data
+            choice3 = form.third.data
+            choice4 = form.fourth.data
+            choice5 = form.fifth.data
+            return render_template("Homepage.html", form=form, user=user, preferences=preferences)
+    return render_template("HomePage.html", form=form, user=user)
 
 
 @app.route("/SignUp", methods=["GET", "POST"])
@@ -23,9 +43,14 @@ def SignUp():
 
 @app.route("/Login", methods = ["GET", "POST"])
 def Login():
+    form = LoginForm()
     if request.method == "POST":
-        print("request was made")
-    return render_template("Login.html")
+        #check against DB, if good, send back to homepage with user variable
+        user = form.userName.data
+        password = form.password.data
+        print(user, password)
+        return redirect(url_for("Home", user=user))
+    return render_template("Login.html", form=form)
 
 
 
