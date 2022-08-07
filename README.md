@@ -23,3 +23,8 @@ pip3 freeze > requirements.txt
 # deactivate virtual environment
 deactivate
 
+## Run
+
+# flask run
+python3 -m flask run
+
