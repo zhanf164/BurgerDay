@@ -2,29 +2,29 @@
 
 ## Pip
 
-# create virtual environment
+### create virtual environment
 python3 -m venv bd-env
 
-# activate virtual environment
+### activate virtual environment
 source bd-env/bin/activate
 
-# install pip package
+### install pip package
 pip3 install flask
 
-# list pip dependencies
+### list pip dependencies
 pip3 list
 
-# load requirements file dependencies
+### load requirements file dependencies
 pip3 install -r requirements.txt
 
-# generate requirements file
+### generate requirements file
 pip3 freeze > requirements.txt
 
-# deactivate virtual environment
+### deactivate virtual environment
 deactivate
 
 ## Run
 
-# flask run
+### flask run
 python3 -m flask run
 
