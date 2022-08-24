@@ -7,4 +7,5 @@ metadata_obj = MetaData()
 
 class DBModel:
     def __init__(self, metadata_obj, engine):
-        pass
+        self.User = Table("User", metadate_obj, autoload_with=engine)
+        self.Preferences = Table("Preferences", metadata_obj, autoload_with=engine)

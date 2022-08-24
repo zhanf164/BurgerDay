@@ -1,0 +1,53 @@
+#instantiate DB connection here, only need to do it once so every function has access to connection objects
+
+#library imports
+from sqlalchemy import select, insert
+from sqlalchemy.orm import Session
+
+#codebase imports
+from DBModels import DBModel
+
+DB_CONNECTION_STRING = f"postgresql://{user}:{password}@{host}/{DBname}"
+
+#Connect to DB
+engine = create_engine(DB_CONNECTION_STRING)
+#Gather metadata
+metadata_obj = MetaData()
+#Create reflection of DB. Always reference this obj
+DB = DBModel(metadata_obj, engine)
+
+def AuthenticateUser(username, password):
+    '''
+        Takes in a username and password string and authenticates whether or not that user exists in the DB,
+        and whether or not the DB password matches supplied password.Returns True if so and False if not
+
+        inputs: username -> string, password -> string 
+        return: Bool
+    '''
+    query = select(DB.User.c.userName, DB.User.c.password).where(DB.User.c.userName == username)
+    with Session(engine) as sess:
+        result = sess.execute(query).first() #fetch first instance
+    if not result:
+        return False
+    else:
+        if result[1] == password:
+            return True
+        else:
+            return False
+
+
+
+def InsertUser(firstName, lastName, email, userName, password, group=None):
+    '''
+        Takes in data required to generate a user and sticks them into the DB. If the user has specified that they are part of a group,
+        update their group preference.
+    '''
+    if group == None:
+        insertStatement = DB.User.insert().values(firstName=firstName, lastName=lastName, email=email, userName=userName, password=password)
+    else:
+        insertStatement = DB.User.insert().values(firstName=firstName, lastName=lastName, email=email, userName=userName, password=password, group=group)
+    
+    with session(engine) as sess:
+        sess.execute(insertStatement)
+        sess.commit()
+    

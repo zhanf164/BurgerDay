@@ -4,10 +4,14 @@ from sqlalchemy import create_engine, MetaData, select
 from sqlalchemy.orm import Session
 
 from .lib.Forms import SignUpForm, LoginForm, DateForm
+from .lib.DBOperations import *
 
 app = Flask(__name__)
 secret = secrets.token_urlsafe(32)
 app.secret_key = secret
+
+DB_CONNECTION_STRING = ""
+
 
 @app.route("/", methods = ["GET", "POST"])
 @app.route("/Home", methods=["GET", "POST"])
@@ -38,18 +42,27 @@ def Home(user=None):
 def SignUp():
     form = SignUpForm()
     if request.method == "POST":
-        pass
+        firstName = form.firstName.data
+        lastName =  form.lastName.data
+        email = form.email.data
+        userName = form.email.data
+        passWord = form.passWord.data
+        InsertUser(firstName, lastName, email, userName, passWord)
+        return url_for("Home", user=user)
     return render_template("SignUp.html", form=form)
 
 @app.route("/Login", methods = ["GET", "POST"])
-def Login():
+def Login(message=None):
     form = LoginForm()
     if request.method == "POST":
         #check against DB, if good, send back to homepage with user variable
         user = form.userName.data
         password = form.password.data
-        print(user, password)
-        return redirect(url_for("Home", user=user))
+        exists = AuthenticateUser(user, password)
+        if exists:
+            return redirect(url_for("Home", user=user))
+        else:
+            return redirect(url_for("Login"), form=form, message="Invalid Credentials")
     return render_template("Login.html", form=form)
 
 
