@@ -56,3 +56,4 @@ def Login():
 
 if __name__ == "__main__":
     app.run()
+#this is a test attempt at pushing from the browser of my ipad
